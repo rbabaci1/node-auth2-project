@@ -1,24 +1,20 @@
-const validateUserCredentials = () => {
-  return (req, res, next) => {
-    const user = req.body;
-    const results = areDefined(user);
+const validateUserCredentials = (req, res, next) => {
+  const user = req.body;
+  const results = areDefined(user);
 
-    if (!results) {
-      if (haveCorrectType(user)) {
-        next();
-      } else {
-        res
-          .status(400)
-          .json({ message: "double check you request body prop types" });
-      }
+  if (!results) {
+    if (haveCorrectType(user)) {
+      next();
     } else {
-      res.status(400).json({
-        message: `👉🏼 [ ${results.join(
-          " | "
-        )} ] 👈🏼 missing in the request body.`,
-      });
+      res
+        .status(400)
+        .json({ message: "double check you request body prop types" });
     }
-  };
+  } else {
+    res.status(400).json({
+      message: `👉🏼 [ ${results.join(" | ")} ] 👈🏼 missing in the request body.`,
+    });
+  }
 };
 
 const areDefined = user => {
