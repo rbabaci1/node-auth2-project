@@ -3,7 +3,12 @@ module.exports = {
     client: "sqlite3",
     useNullAsDefault: true,
     connection: {
-      filename: "./database/users.db",
+      filename: "./database/auth-users.db",
+    },
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run("PRAGMA foreign_keys = ON", done);
+      },
     },
     migrations: {
       directory: "./database/migrations",
