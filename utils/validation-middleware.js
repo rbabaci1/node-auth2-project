@@ -35,4 +35,4 @@ const haveCorrectType = ({ username, password, department }) => {
   );
 };
 
-module.exports = { validateUserCredentials };
+module.exports = validateUserCredentials;
