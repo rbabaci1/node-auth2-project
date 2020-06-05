@@ -18,7 +18,7 @@ server.get("/", (req, res) => {
 });
 
 const errorHandler = (error, req, res, next) => {
-  const code = error.status || error.statusCode || 500;
+  const code = error.statusCode || 500;
 
   res.status(code).json(error);
 };
