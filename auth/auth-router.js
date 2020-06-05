@@ -24,4 +24,9 @@ router.post("/register", validateUserCredentials, async (req, res, next) => {
   }
 });
 
+router.post("/login", validateUserCredentials, async (req, res, next) => {
+  try {
+  } catch (error) {}
+});
+
 module.exports = router;

@@ -8,4 +8,6 @@ const add = async newUser => {
   return findBy({ id });
 };
 
-module.exports = { add };
+const get = () => db("users");
+
+module.exports = { add, get };
