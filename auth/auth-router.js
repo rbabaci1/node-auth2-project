@@ -8,17 +8,19 @@ const generateToken = require("../utils/generateToken");
 
 router.post("/register", validateUserCredentials, async (req, res, next) => {
   try {
-    const user = req.body;
-    const rounds = process.env.BCRYPT_ROUNDS;
-    const hash = bcrypt.hashSync(user.password, rounds);
+    console.log("/regiseter");
+    res.status(200).json({ message: "hello rabah" });
+    // const user = req.body;
+    // const rounds = process.env.BCRYPT_ROUNDS;
+    // const hash = bcrypt.hashSync(user.password, rounds);
 
-    const addedUser = await Users.add({ ...user, password: hash });
-    const token = generateToken(addedUser);
+    // const addedUser = await Users.add({ ...user, password: hash });
+    // const token = generateToken(addedUser);
 
-    req.statusCode(201).json({ addedUser, token });
+    // req.statusCode(201).json({ addedUser, token });
   } catch ({ errno, code, message }) {
     next({
-      message: "The recipe could not be added at this moment.",
+      message: "The user could not be added at this moment.",
       errno,
       code,
       reason: message,

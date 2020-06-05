@@ -1,38 +1,42 @@
 const validateUserCredentials = (req, res, next) => {
   const user = req.body;
-  const results = areDefined(user);
+  const { username, password, department } = user;
+  const undefinedProps = areDefined({ username, password, department });
+  const incorrectTypes = haveCorrectType(user);
 
-  if (!results) {
-    if (haveCorrectType(user)) {
-      next();
-    } else {
-      res
-        .status(400)
-        .json({ message: "double check you request body prop types" });
-    }
-  } else {
+  if (undefinedProps.length) {
     res.status(400).json({
-      message: `👉🏼 [ ${results.join(" | ")} ] 👈🏼 missing in the request body.`,
+      message: `👉🏼 [ ${undefinedProps.join(
+        " | "
+      )} ] 👈🏼 missing in the request body.`,
     });
+  } else if (incorrectTypes.length) {
+    res.status(400).json({
+      message: `👉🏼 [ ${incorrectTypes.join(" | ")} ] 👈🏼 must be type string.`,
+    });
+  } else {
+    next();
   }
 };
 
 const areDefined = user => {
-  let undefinedProps = [];
+  const undefinedProps = [];
 
   Object.keys(user).forEach(prop => {
     if (user[prop] === undefined) undefinedProps.push(prop);
   });
 
-  return undefinedProps.length ? undefinedProps : false;
+  return undefinedProps;
 };
 
-const haveCorrectType = ({ username, password, department }) => {
-  return Boolean(
-    typeof username === "string" &&
-      typeof password === "string" &&
-      typeof department === "string"
-  );
+const haveCorrectType = user => {
+  const incorrectTypes = [];
+
+  Object.keys(user).forEach(prop => {
+    if (typeof user[prop] !== "string") incorrectTypes.push(prop);
+  });
+
+  return incorrectTypes;
 };
 
 module.exports = validateUserCredentials;
