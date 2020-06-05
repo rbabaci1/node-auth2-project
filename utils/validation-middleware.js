@@ -4,13 +4,13 @@ const validateUserCredentials = (req, res, next) => {
   const undefinedProps = areDefined({ username, password, department });
   const incorrectTypes = haveCorrectType(user);
 
-  if (undefinedProps.length) {
+  if (undefinedProps) {
     res.status(400).json({
       message: `👉🏼 [ ${undefinedProps.join(
         " | "
       )} ] 👈🏼 missing in the request body.`,
     });
-  } else if (incorrectTypes.length) {
+  } else if (incorrectTypes) {
     res.status(400).json({
       message: `👉🏼 [ ${incorrectTypes.join(" | ")} ] 👈🏼 must be type string.`,
     });
@@ -26,7 +26,7 @@ const areDefined = user => {
     if (user[prop] === undefined) undefinedProps.push(prop);
   });
 
-  return undefinedProps;
+  return undefinedProps.length ? undefinedProps : false;
 };
 
 const haveCorrectType = user => {
@@ -36,7 +36,7 @@ const haveCorrectType = user => {
     if (typeof user[prop] !== "string") incorrectTypes.push(prop);
   });
 
-  return incorrectTypes;
+  return incorrectTypes.length ? incorrectTypes : false;
 };
 
 module.exports = validateUserCredentials;
