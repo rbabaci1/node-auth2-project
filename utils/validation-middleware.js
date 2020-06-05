@@ -1,16 +1,16 @@
-const validateCredentials = (req, res, next) => {
+const validateUserCredentials = (req, res, next) => {
   const user = req.body;
   const { username, password, department } = user;
   const undefinedProps = areDefined({ username, password, department });
   const incorrectTypes = haveCorrectType(user);
 
-  if (undefinedProps) {
+  if (undefinedProps.length) {
     res.status(400).json({
       message: `👉🏼 [ ${undefinedProps.join(
         " | "
       )} ] 👈🏼 missing in the request body.`,
     });
-  } else if (incorrectTypes) {
+  } else if (incorrectTypes.length) {
     res.status(400).json({
       message: `👉🏼 [ ${incorrectTypes.join(" | ")} ] 👈🏼 must be type string.`,
     });
@@ -26,7 +26,7 @@ const areDefined = user => {
     if (user[prop] === undefined) undefinedProps.push(prop);
   });
 
-  return undefinedProps.length ? undefinedProps : false;
+  return undefinedProps;
 };
 
 const haveCorrectType = user => {
@@ -36,7 +36,7 @@ const haveCorrectType = user => {
     if (typeof user[prop] !== "string") incorrectTypes.push(prop);
   });
 
-  return incorrectTypes.length ? incorrectTypes : false;
+  return incorrectTypes;
 };
 
-module.exports = validateCredentials;
+module.exports = validateUserCredentials;
