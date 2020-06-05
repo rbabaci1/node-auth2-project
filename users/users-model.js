@@ -10,4 +10,4 @@ const add = async newUser => {
 
 const get = () => db("users");
 
-module.exports = { add, get };
+module.exports = { add, get, findBy };
