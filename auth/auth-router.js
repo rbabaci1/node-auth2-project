@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 
-const secrets = require("../utils/secrets");
 const validateCredentials = require("../utils/validation-middleware");
 const Users = require("../users/users-model");
 const generateToken = require("../utils/generateToken");

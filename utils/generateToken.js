@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const { jwtSecret } = require("../utils/secrets");
-const HALF_HOUR = 1000 * 60 * 30;
+const HALF_HOUR = 60 * 30;
 
 const generateToken = ({ id, username, department }) => {
   const payload = {
