@@ -5,23 +5,25 @@ const secrets = require("../utils/secrets");
 module.exports = (req, res, next) => {
   try {
     const authorization = req.headers.authorization;
-    const [directive, token] = authorization ? authorization : [false, false];
+    const [directive, token] = authorization
+      ? authorization.split(" ")
+      : [false, false];
 
-    if (directive !== "bearer") {
-      res
-        .status(401)
-        .json({ message: "Please provide token type in headers." });
-    } else if (token) {
+    if (token && directive == "Bearer") {
       jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
         if (err) {
-          res.status(401).json({ message: "Invalid credentials, try again?" });
+          res.status(401).json({ message: "Invalid credentials. Try again?" });
         } else {
           req.decodedJwt = decodedToken;
           next();
         }
       });
+    } else if (directive !== "Bearer") {
+      res.status(401).json({
+        message: `Token type name (Bearer) is not included in headers.`,
+      });
     } else {
-      throw new Error("Invalid credentials.");
+      throw new Error("User token is not included in headers.");
     }
   } catch ({ message, statusCode }) {
     next({
