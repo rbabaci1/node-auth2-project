@@ -24,7 +24,11 @@ module.exports = (req, res, next) => {
     } else {
       throw new Error("Invalid credentials.");
     }
-  } catch ({ message }) {
-    res.status(500).json({ message });
+  } catch ({ message, statusCode }) {
+    next({
+      message: "Can't authenticate this user at this moment.",
+      reason: message,
+      statusCode,
+    });
   }
 };
