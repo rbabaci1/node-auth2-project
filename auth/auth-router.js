@@ -17,7 +17,7 @@ router.post(
       const addedUser = await Users.add({ ...user, password: hash });
       const token = generateToken(addedUser);
 
-      res.status(201).json({ user: addedUser, token });
+      res.status(201).json({ addedUser, token });
     } catch ({ message }) {
       next({
         message: "The user could not be added at this moment.",
@@ -36,7 +36,7 @@ router.post("/login", validateCredentials("login"), async (req, res, next) => {
     if (user && bcrypt.compareSync(password, user.password)) {
       const token = generateToken(user);
 
-      res.status(200).json({ message: "Welcome!", user, token });
+      res.status(200).json({ message: "Welcome!", token });
     } else {
       res.status(401).json({ message: "Invalid credentials. Try again?" });
     }
