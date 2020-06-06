@@ -17,7 +17,7 @@ router.post(
       const addedUser = await Users.add({ ...user, password: hash });
       const token = generateToken(addedUser);
 
-      res.status(201).json({ addedUser, token });
+      res.status(201).json({ user: addedUser, token });
     } catch ({ message }) {
       next({
         message: "The user could not be added at this moment.",
