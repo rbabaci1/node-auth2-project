@@ -10,4 +10,6 @@ const add = async newUser => {
 
 const get = () => db("users");
 
-module.exports = { add, get, findBy };
+const getByDepartment = department => db("users").where({ department });
+
+module.exports = { add, get, getByDepartment, findBy };

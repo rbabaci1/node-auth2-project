@@ -5,7 +5,8 @@ const restricted = require("../auth/restricted-middleware");
 
 router.get("/", restricted, async (req, res, next) => {
   try {
-    const users = await Users.get();
+    const department = req.query.department;
+    const users = await Users.getByDepartment(department);
 
     res.status(200).json({ users });
   } catch ({ message, statusCode }) {
