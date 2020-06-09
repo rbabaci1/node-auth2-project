@@ -14,7 +14,7 @@ server.use("/api/users", usersRouter);
 server.use("/api/auth", authRouter);
 
 server.get("/", (req, res) => {
-  res.status(200).json({ message: "API is up!" });
+  res.status(200).json({ message: "*** API is up! ***" });
 });
 
 const errorHandler = (error, req, res, next) => {
