@@ -11,8 +11,7 @@ router.post(
   async (req, res, next) => {
     try {
       const user = req.body;
-      const rounds = process.env.BCRYPT_ROUNDS || 8;
-      const hash = bcrypt.hashSync(user.password, rounds);
+      const hash = bcrypt.hashSync(user.password, 8);
 
       const addedUser = await Users.add({ ...user, password: hash });
       const token = generateToken(addedUser);
