@@ -12,8 +12,9 @@ router.post(
     try {
       const user = req.body;
       const hash = bcrypt.hashSync(user.password, 8);
+      user.password = hash;
 
-      const addedUser = await Users.add({ ...user, password: hash });
+      const addedUser = await Users.add(user);
       const token = generateToken(addedUser);
 
       res.status(201).json({ addedUser, token });
