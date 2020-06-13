@@ -1,6 +1,5 @@
 const db = require("../database/dbConfig");
 const Users = require("./users-model");
-
 const mockData = require("../utils/mockData");
 
 describe("users model", () => {
