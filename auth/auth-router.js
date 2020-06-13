@@ -5,27 +5,27 @@ const validateCredentials = require("../utils/validation-middleware");
 const Users = require("../users/users-model");
 const generateToken = require("../utils/generateToken");
 
-router.post(
-  "/register",
-  validateCredentials("register"),
-  async (req, res, next) => {
-    try {
-      const user = req.body;
-      const hash = bcrypt.hashSync(user.password, 8);
-      user.password = hash;
+router.post("/register", validateCredentials("register"), async function (
+  req,
+  res,
+  next
+) {
+  try {
+    const user = req.body;
+    const hash = bcrypt.hashSync(user.password, 8);
+    user.password = hash;
 
-      const addedUser = await Users.add(user);
-      const token = generateToken(addedUser);
+    const addedUser = await Users.add(user);
+    const token = generateToken(addedUser);
 
-      res.status(201).json({ addedUser, token });
-    } catch ({ message }) {
-      next({
-        message: "The user could not be added at this moment.",
-        reason: message,
-      });
-    }
+    res.status(201).json({ addedUser, token });
+  } catch ({ message }) {
+    next({
+      message: "The user could not be added at this moment.",
+      reason: message,
+    });
   }
-);
+});
 
 router.post("/login", validateCredentials("login"), async (req, res, next) => {
   try {
