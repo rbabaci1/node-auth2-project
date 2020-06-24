@@ -18,7 +18,7 @@ server.use("/api/auth", authRouter);
 server.post("/api/recommend", async (req, res) => {
   try {
     console.log(req.body);
-    res.send("made it.");
+    res.status(200).json({ message: "made it!" });
     // const data = req.body;
     // const res = await Axios.post("https://medicabi.herokuapp.com/send", data);
     // console.log(res);
