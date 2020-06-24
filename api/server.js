@@ -6,7 +6,6 @@ const cors = require("cors");
 const server = express();
 const usersRouter = require("../users/users-router");
 const authRouter = require("../auth/auth-router");
-const { default: Axios } = require("axios");
 
 server.use(express.json());
 server.use(helmet());
